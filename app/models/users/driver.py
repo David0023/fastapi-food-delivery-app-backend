@@ -1,4 +1,6 @@
 from sqlalchemy import Column, String, Boolean
+
+from app.core.enums import UserRole
 from . import User
 
 class Driver(User):
@@ -7,3 +9,5 @@ class Driver(User):
     license_number = Column(String, unique=True, index=True)
     vehicle_type = Column(String, nullable=True)
     is_available = Column(Boolean, default=True, index=True)
+
+    __mapper_args__ = {"polymorphic_identity": UserRole.driver.value}
