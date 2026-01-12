@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String
 
 from app.core.enums import UserRole
-from . import User
+from .user import User
 
 class Customer(User):
     __tablename__ = "customers"

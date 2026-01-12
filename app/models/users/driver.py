@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Boolean
 
 from app.core.enums import UserRole
-from . import User
+from .user import User
 
 class Driver(User):
     __tablename__ = "drivers"

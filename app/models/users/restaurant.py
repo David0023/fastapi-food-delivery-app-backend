@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Integer, Boolean
 
 from app.core.enums import UserRole
-from . import User 
+from .user import User 
 
 class Restaurant(User):
     __tablename__ = "restaurants"

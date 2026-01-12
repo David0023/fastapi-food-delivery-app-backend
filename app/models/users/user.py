@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, Enum as SAEnum
 from sqlalchemy.orm import relationship
 from app.models.base import BaseModel, TimestampMixin
-from core.enums import UserRole
+from app.core.enums import UserRole
 
 class User(BaseModel, TimestampMixin):
     __abstract__ = True

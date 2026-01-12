@@ -1,5 +1,5 @@
 from pydantic import ConfigDict
-from . import UserBase, UserCreate, UserUpdate
+from .user import UserBase, UserCreate, UserUpdate
 
 class RestaurantBase(UserBase):
     model_config = ConfigDict(from_attributes=True)
