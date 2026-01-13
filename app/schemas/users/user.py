@@ -13,7 +13,7 @@ class UserInDB(UserBase):
 class UserCreate(BaseModel):
     username: str
     email: str
-    hashed_password: str
+    password: str
 
 class UserUpdate(BaseModel):
     model_config = ConfigDict(from_attributes=True)
