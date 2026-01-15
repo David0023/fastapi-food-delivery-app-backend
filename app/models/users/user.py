@@ -4,7 +4,7 @@ from app.models.base import BaseModel, TimestampMixin
 from app.core.enums import UserRole
 
 class User(BaseModel, TimestampMixin):
-    __abstract__ = True
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
