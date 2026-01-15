@@ -20,7 +20,6 @@ def register_customer(user_data: CustomerCreate, db: Session = Depends(get_db)):
 
         data = user_data.model_dump(exclude_unset=True)
         data["hashed_password"] = get_password_hash(data.pop("password"))
-        data["role"] = UserRole.customer
 
         new_customer = Customer(**data)
         db.add(new_customer)
