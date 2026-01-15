@@ -11,8 +11,11 @@ class User(BaseModel, TimestampMixin):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String, nullable=False)
     is_active = Column(Boolean, default=True)
-    role = Column(SAEnum(UserRole), nullable=False, default=UserRole.user)
+    role = Column(SAEnum(UserRole), nullable=False)
 
-    _mapper_args__ = {"polymorphic_on": role, "polymorphic_identity": UserRole.user.value}
+    __mapper_args__ = {
+        "polymorphic_on": role,
+        "polymorphic_identity": UserRole.user.value
+    }
 
     # TODO: Add profile image
