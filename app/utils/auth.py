@@ -8,9 +8,8 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_
 
 from app.core.config import settings
-from app.core.enums import UserRole
 from app.utils.database import get_db
-from app.utils.models import get_model_by_role
+from app.models.users.user import User
 
 pwd_context = PasswordHash.recommended()
 
@@ -73,15 +72,20 @@ def decode_token(token: str) -> TokenData:
 def authenticate_user(
     username: str,
     password: str,
-    role: UserRole,
     db: Session
-):
-    user_model = get_model_by_role(role)
-    user = db.query(user_model).filter(user_model.username == username).first()
+) -> User:
+    """
+    Authenticate user by searching user table.
+    """
+    # This is fast because username is indexed in each table
+    user = db.query(User).filter(User.username == username).first()
+
     if not user:
         return False
+
     if not pwd_context.verify(password, user.hashed_password):
         return False
+
     return user
 
 def get_current_user(
@@ -90,8 +94,7 @@ def get_current_user(
 ):
     token_data = decode_token(token)
 
-    user_model = get_model_by_role(UserRole(token_data.role))
-    user = db.query(user_model).filter(user_model.username == token_data.sub).first()
+    user = db.query(User).filter(and_(User.username == token_data.sub, User.role == token_data.role)).first()
     if user is None:
         raise credentials_exception
     return user
