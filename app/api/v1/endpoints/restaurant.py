@@ -2,28 +2,28 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.utils.database import get_db
 
-from app.schemas.users.customer import CustomerCreate, CustomerBase
-from app.models.users.customer import Customer
+from app.schemas.users.restaurant import RestaurantCreate, RestaurantBase
+from app.models.users.restaurant import Restaurant
 from app.utils.auth import hash_password_inside
 from app.utils.validate import validate_user_registration
 
 router = APIRouter(
-    prefix="/customers",
-    tags=["customers"]
+    prefix="/restaurants",
+    tags=["restaurants"]
 )
 
-@router.post("/register", response_model=CustomerBase)
-def register_customer(user_data: CustomerCreate, db: Session = Depends(get_db)):
+@router.post("/register", response_model=RestaurantBase)
+def register_customer(user_data: RestaurantCreate, db: Session = Depends(get_db)):
     try:
-        validate_user_registration(user_data, db, Customer)
+        validate_user_registration(user_data, db, Restaurant)
 
         data = hash_password_inside(user_data.model_dump(exclude_unset=True))
-        new_customer = Customer(**data)
-        db.add(new_customer)
+        new_restaurant = Restaurant(**data)
+        db.add(new_restaurant)
         db.commit()
-        db.refresh(new_customer)
+        db.refresh(new_restaurant)
 
-        return new_customer
+        return new_restaurant
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

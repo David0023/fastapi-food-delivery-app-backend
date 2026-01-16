@@ -1,29 +1,27 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from app.utils.database import get_db
 
-from app.schemas.users.customer import CustomerCreate, CustomerBase
-from app.models.users.customer import Customer
+from app.models.users.admin import Admin
+from app.schemas.users.admin import AdminCreate
 from app.utils.auth import hash_password_inside
+from app.utils.database import get_db
 from app.utils.validate import validate_user_registration
 
 router = APIRouter(
-    prefix="/customers",
-    tags=["customers"]
+    prefix='/admins',
+    tags=['admins']
 )
 
-@router.post("/register", response_model=CustomerBase)
-def register_customer(user_data: CustomerCreate, db: Session = Depends(get_db)):
+@router.post('/register')
+def create_new_admin(user_data: AdminCreate, db: Session = Depends(get_db)):
     try:
-        validate_user_registration(user_data, db, Customer)
+        validate_user_registration(user_data, db, Admin)
 
         data = hash_password_inside(user_data.model_dump(exclude_unset=True))
-        new_customer = Customer(**data)
-        db.add(new_customer)
+        new_admin = Admin(**data)
+        db.add(new_admin)
         db.commit()
-        db.refresh(new_customer)
-
-        return new_customer
+        db.refresh(new_admin)
     except ValueError as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
