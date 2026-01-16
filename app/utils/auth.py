@@ -104,3 +104,4 @@ def hash_password_inside(data: Dict) -> Dict | None:
     if not 'password' in data:
         return None
     data["hashed_password"] = get_password_hash(data.pop("password"))
+    return data
