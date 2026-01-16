@@ -6,6 +6,7 @@ from pydantic import BaseModel, ValidationError
 from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
+from typing import Dict
 
 from app.core.config import settings
 from app.utils.database import get_db
@@ -98,3 +99,8 @@ def get_current_user(
     if user is None:
         raise credentials_exception
     return user
+
+def hash_password_inside(data: Dict) -> Dict | None:
+    if not 'password' in data:
+        return None
+    data["hashed_password"] = get_password_hash(data.pop("password"))
