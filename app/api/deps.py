@@ -41,8 +41,8 @@ class RestaurantPaginationParams(BasePaginationParams):
 class RestaurantFilterParams:
     def __init__(
             self,
-            name: str = Query(None),
-            cusine_styles: List[CuisineStyle] = Query([])
+            name: str | None = Query(None),
+            cuisine_styles: List[CuisineStyle] | None = Query(None)
     ):
         self.name = name
-        self.cuisine_styles = cusine_styles
+        self.cuisine_styles = cuisine_styles or []
