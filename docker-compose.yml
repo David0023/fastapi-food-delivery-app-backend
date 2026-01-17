@@ -26,6 +26,8 @@ services:
     environment:
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-food_delivery_app}
       SECRET_KEY: ${SECRET_KEY}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      SEED_DB: ${SEED_DB:-false}
     ports:
       - "8000:8000"
     depends_on:
