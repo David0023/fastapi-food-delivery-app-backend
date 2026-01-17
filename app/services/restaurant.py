@@ -29,7 +29,7 @@ def get_restaurants(
         query = query.filter(Restaurant.name.ilike(f"%{filters.name}%"))
 
     if filters.cuisine_styles:
-        query = query.filter(Restaurant.cuisine_style.in_filters.cuisine_styles)
+        query = query.filter(Restaurant.cuisine_style.in_(filters.cuisine_styles))
 
     if params.sort_by:
         query = apply_sorting(query, Restaurant, params.sort_by.value, params.order.value)
