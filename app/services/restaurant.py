@@ -1,5 +1,6 @@
 """Restaurant service layer for database operations."""
 from sqlalchemy.orm import Session
+from typing import List
 
 from app.models.users.restaurant import Restaurant
 from app.api.deps import RestaurantPaginationParams
@@ -10,7 +11,7 @@ def get_restaurants(
     db: Session,
     params: RestaurantPaginationParams,
     filters: dict | None = None
-) -> list[Restaurant]:
+) -> List[Restaurant]:
     """
     Get list of restaurants with filtering, sorting, and pagination.
 

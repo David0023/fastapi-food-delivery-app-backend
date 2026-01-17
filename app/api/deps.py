@@ -1,7 +1,7 @@
 """Pagination and Sort Dependency"""
 from enum import Enum
 from fastapi import Query
-from typing import list
+from typing import List
 from app.core.enums import CuisineStyle
 
 
@@ -42,7 +42,7 @@ class RestaurantFilterParams:
     def __init__(
             self,
             name: str = Query(None),
-            cusine_styles: list[CuisineStyle] = Query([])
+            cusine_styles: List[CuisineStyle] = Query([])
     ):
         self.name = name
         self.cuisine_styles = cusine_styles
