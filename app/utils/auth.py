@@ -92,7 +92,7 @@ def authenticate_user(
 def get_current_user(
     db: Session = Depends(get_db),
     token: str = Depends(oauth_scheme)
-):
+) -> User:
     token_data = decode_token(token)
 
     user = db.query(User).filter(and_(User.username == token_data.sub, User.role == token_data.role)).first()
