@@ -9,7 +9,7 @@ from app.models.users.admin import Admin
 from app.models.users.customer import Customer
 from app.models.users.driver import Driver
 from app.models.users.restaurant import Restaurant
-from app.models.reviews import Review
+from app.models.review import Review
 from app.core.enums import CuisineStyle
 
 # Default password for all test users

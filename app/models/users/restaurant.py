@@ -20,7 +20,7 @@ class Restaurant(User):
     __mapper_args__ = {"polymorphic_identity": UserRole.restaurant.value}
 
     def update_rating(self, db: Session):
-        from app.models.reviews import Review
+        from app.models.review import Review
         
         count, avg = db.query(
             func.count(Review.id),
