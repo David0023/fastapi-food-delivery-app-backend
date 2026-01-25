@@ -9,7 +9,7 @@ from app.services.filters import apply_filters, apply_pagination, apply_sorting
 
 def get_restaurants(
     db: Session,
-    params: RestaurantPaginationParams,
+    pagination: RestaurantPaginationParams,
     filters: dict | None = None
 ) -> List[Restaurant]:
     """
@@ -17,7 +17,7 @@ def get_restaurants(
 
     Args:
         db: Database session
-        params: Pagination and sort parameters
+        pagination: Pagination and sort parameters
         filters: Optional dict of {field_name: value} for filtering
 
     Returns:
@@ -31,10 +31,10 @@ def get_restaurants(
     if filters.cuisine_styles:
         query = query.filter(Restaurant.cuisine_style.in_(filters.cuisine_styles))
 
-    if params.sort_by:
-        query = apply_sorting(query, Restaurant, params.sort_by.value, params.order.value)
+    if pagination.sort_by:
+        query = apply_sorting(query, Restaurant, pagination.sort_by.value, pagination.order.value)
 
-    query = apply_pagination(query, params.skip, params.limit)
+    query = apply_pagination(query, pagination.skip, pagination.limit)
 
     return query.all()
 
