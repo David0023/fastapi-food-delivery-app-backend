@@ -21,3 +21,7 @@ class CuisineStyle(str, Enum):
     french = "french"
     mediterranean = "mediterranean"
     other = "other"
+
+class VehicleType(str, Enum):
+    car = "car"
+    motorcycle = 'motorcycle'
