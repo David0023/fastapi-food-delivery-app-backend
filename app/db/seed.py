@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from app.utils.database import SessionLocal, engine
 from app.utils.auth import get_password_hash
 from app.models.base import BaseModel
+from app.models.users.user import User
 from app.models.users.admin import Admin
 from app.models.users.customer import Customer
 from app.models.users.driver import Driver
@@ -19,10 +20,8 @@ DEFAULT_PASSWORD = "password123"
 def clear_db(db: Session) -> None:
     """Clear all data from tables."""
     db.query(Review).delete()
-    db.query(Admin).delete()
-    db.query(Customer).delete()
-    db.query(Driver).delete()
-    db.query(Restaurant).delete()
+    # Delete from User table (parent) to properly cascade to all child tables
+    db.query(User).delete()
     db.commit()
     print("Database cleared.")
 
