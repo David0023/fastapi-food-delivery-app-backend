@@ -2,7 +2,7 @@
 from enum import Enum
 from fastapi import Query
 from typing import List
-from app.core.enums import CuisineStyle
+from app.core.enums import CuisineStyle, VehicleType
 
 
 class SortOrder(str, Enum):
@@ -46,3 +46,28 @@ class RestaurantFilterParams:
     ):
         self.name = name
         self.cuisine_styles = cuisine_styles or []
+
+#------------------------------------- Driver Specific -------------------------------------#
+class DriverSortOption(str, Enum):
+    name = 'name'
+    vehicle_type = 'vehicle_type'
+
+class DriverPaginationParams(BasePaginationParams):
+    def __init__(
+        self,
+        skip: int = Query(0, ge=0),
+        limit: int = Query(10, ge=0, le=100),
+        sort_by: DriverSortOption | None = Query(None),
+        order: SortOrder = Query(SortOrder.asc)
+    ):
+        super().__init__(skip, limit, order)
+        self.sort_by = sort_by
+
+class DriverFilterParams:
+    def __init__(
+        self,
+        is_available: bool = True,
+        vehicle_types: List[VehicleType] | None = Query(None)
+    ):
+        self.is_available = is_available
+        self.vehicle_types = vehicle_types or []
