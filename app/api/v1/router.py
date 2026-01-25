@@ -6,6 +6,7 @@ from .endpoints.users.customer import router as customer_router
 from .endpoints.users.driver import router as driver_router
 from .endpoints.users.restaurant import router as restaurant_router
 from .endpoints.query import router as query_router
+from .endpoints.review import router as review_router
 
 
 v1_router = APIRouter(
@@ -19,3 +20,4 @@ v1_router.include_router(customer_router)
 v1_router.include_router(driver_router)
 v1_router.include_router(restaurant_router)
 v1_router.include_router(query_router)
+v1_router.include_router(review_router)
