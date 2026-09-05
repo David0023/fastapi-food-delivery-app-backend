@@ -2,7 +2,7 @@
 import random
 from sqlalchemy.orm import Session
 
-from app.utils.database import SessionLocal, engine
+from app.utils.database import Base, SessionLocal, engine
 from app.utils.auth import get_password_hash
 from app.models.base import BaseModel
 from app.models.users.user import User
@@ -83,8 +83,8 @@ def seed_drivers(db: Session) -> list[Driver]:
     drivers_data = [
         {"username": "driver1", "email": "driver1@example.com", "license_number": "DL-001", "vehicle_type": "car"},
         {"username": "driver2", "email": "driver2@example.com", "license_number": "DL-002", "vehicle_type": "motorcycle"},
-        {"username": "driver3", "email": "driver3@example.com", "license_number": "DL-003", "vehicle_type": "bicycle"},
-        {"username": "speedy_mike", "email": "mike@example.com", "license_number": "DL-004", "vehicle_type": "car"},
+        {"username": "driver3", "email": "driver3@example.com", "license_number": "DL-003", "vehicle_type": "car"},
+        {"username": "speedy_mike", "email": "mike@example.com", "license_number": "DL-004", "vehicle_type": "motorcycle"},
     ]
 
     drivers = []
@@ -175,6 +175,7 @@ def seed_database() -> None:
     try:
         print("Starting database seed...")
 
+        Base.metadata.create_all(bind=engine)
         # Clear existing data
         clear_db(db)
 
